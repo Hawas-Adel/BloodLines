@@ -366,6 +366,7 @@ GameObject:
   - component: {fileID: 7014841578157659288}
   - component: {fileID: 7014841578157659287}
   - component: {fileID: 7014841578157659286}
+  - component: {fileID: 2923826935159001327}
   m_Layer: 6
   m_Name: Common Actor Comps
   m_TagString: Untagged
@@ -412,7 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9d246a72d5ab0469a0dac822b7a749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Radius: 0.1
+  Radius: 0.15
   LayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -472,6 +473,19 @@ MonoBehaviour:
         _Object: {fileID: 0}
   OnHitByEnemy:
     _PersistentCalls: []
+--- !u!114 &2923826935159001327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7014841578157659283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112220def55f5be418847fc07b10e0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartingItems: []
 --- !u!1 &7014841579006712371
 GameObject:
   m_ObjectHideFlags: 0

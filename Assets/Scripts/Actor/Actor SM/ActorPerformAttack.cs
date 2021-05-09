@@ -10,7 +10,7 @@ public class ActorPerformAttack : MonoBehaviour
 
 	private StateMachineManager SMM = default;
 	[SerializeField] private StateMachineState UnSheathedState = default;
-	private ActorAnimator AA;
+	private ActorModel AA;
 	private Rigidbody RB;
 
 	[Header("Hit Target Capsule")]
@@ -22,7 +22,7 @@ public class ActorPerformAttack : MonoBehaviour
 	private void Awake()
 	{
 		RB = GetComponentInParent<Rigidbody>();
-		AA = RB.GetComponentInChildren<ActorAnimator>();
+		AA = RB.GetComponentInChildren<ActorModel>();
 		SMM = UnSheathedState.GetComponentInParent<StateMachineManager>();
 	}
 

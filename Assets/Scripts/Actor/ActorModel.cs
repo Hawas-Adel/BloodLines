@@ -2,7 +2,7 @@ using NaughtyAttributes;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class ActorAnimator : MonoBehaviour
+public class ActorModel : MonoBehaviour
 {
 	[SerializeField] [AnimatorParam(nameof(Animator), AnimatorControllerParameterType.Int)] private int RandomizerParam = default;
 	[Header("Locomotion")]

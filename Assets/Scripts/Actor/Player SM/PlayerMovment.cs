@@ -5,12 +5,12 @@ public class PlayerMovment : MonoBehaviour
 {
 	private Rigidbody Rigidbody = default;
 	[SerializeField] private ActorStats ActorStats = default;
-	private ActorAnimator ActorAnimator = default;
+	private ActorModel ActorAnimator = default;
 
 	private void Awake()
 	{
 		Rigidbody = GetComponentInParent<Rigidbody>();
-		ActorAnimator = Rigidbody.GetComponentInChildren<ActorAnimator>();
+		ActorAnimator = Rigidbody.GetComponentInChildren<ActorModel>();
 	}
 
 	private void OnMoveInput(InputAction InputAction)

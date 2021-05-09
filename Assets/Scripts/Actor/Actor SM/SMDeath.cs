@@ -8,9 +8,9 @@ public class SMDeath : MonoBehaviour
 	[SerializeField] private StateMachineManager SMM = default;
 	[SerializeField] private StateMachineState BusyState = default;
 
-	private ActorAnimator AA;
+	private ActorModel AA;
 
-	private void Awake() => AA = GetComponentInParent<Rigidbody>().GetComponentInChildren<ActorAnimator>();
+	private void Awake() => AA = GetComponentInParent<Rigidbody>().GetComponentInChildren<ActorModel>();
 
 	private void OnEnable() => ActorLife.OnDeath += EnterBusyState;
 	private void OnDisable() => ActorLife.OnDeath -= EnterBusyState;

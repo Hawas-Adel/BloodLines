@@ -6,12 +6,12 @@ using UnityEngine.AI;
 public class NavMeshAgentMovmentAnimator : MonoBehaviour
 {
 	private NavMeshAgent NMA;
-	private ActorAnimator AA;
+	private ActorModel AA;
 
 	private void Awake()
 	{
 		NMA = GetComponentInParent<NavMeshAgent>();
-		AA = NMA.GetComponentInChildren<ActorAnimator>();
+		AA = NMA.GetComponentInChildren<ActorModel>();
 	}
 
 	private void Update() => AA.AnimateVelocity(NMA.transform.InverseTransformVector(NMA.velocity), 0.1f, Time.deltaTime);
