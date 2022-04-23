@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using OneLine;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Potion", order = 5)]
 public class Potion : UsableItem
 {
-	public ActiveEffect[] Effects;
+	[Separator("Potion Properties")]
+	[OneLineWithHeader] [HideLabel] public ActiveEffectMagnitude[] Effects;
 
 	public override bool UseItem(GameObject USER)
 	{
@@ -33,7 +33,7 @@ public class Potion : UsableItem
 			{
 				for (int i = 0 ; i < Effects.Length ; i++)
 				{
-					var D = Effects[i].EffectDescription;
+					var D = Effects[i].GetEffectDescription();
 					if (!string.IsNullOrWhiteSpace(D))
 						Instantiate(UI.GenericText, UI.GenericText.transform.parent).text = D;
 				}

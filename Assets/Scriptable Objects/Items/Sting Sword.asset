@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ae019bc58324d4468035aea5b863e26, type: 3}
+  m_Name: Sting Sword
+  m_EditorClassIdentifier: 
+  Layer: 0
+  Tag: Untagged
+  GizmosColor: {r: 0.17254902, g: 0.34901962, b: 0.5254902, a: 0.101960786}
+  WorldModel: {fileID: 28653909090423159, guid: db3928279668b0f4384b8740151ba2a0, type: 3}
+  Plugins: []
+  Weight: 3
+  Value: 100
+  Description: 
+  OnAddedOrRemovedFromInventory:
+    _PersistentCalls: []
+  EquipSlot: {fileID: 11400000, guid: fe0ffa902bb637248bb6770afa2e3d26, type: 2}
+  OnEquipped:
+    _PersistentCalls: []
+  OnUnEquipped:
+    _PersistentCalls: []

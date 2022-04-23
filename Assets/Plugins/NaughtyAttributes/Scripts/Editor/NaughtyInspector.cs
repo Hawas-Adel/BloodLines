@@ -28,10 +28,7 @@ namespace NaughtyAttributes.Editor
 				target, m => m.GetCustomAttributes(typeof(ButtonAttribute), true).Length > 0);
 		}
 
-		protected virtual void OnDisable()
-		{
-			ReorderableListPropertyDrawer.Instance.ClearCache();
-		}
+		protected virtual void OnDisable() => ReorderableListPropertyDrawer.Instance.ClearCache();
 
 		public override void OnInspectorGUI()
 		{
@@ -123,10 +120,12 @@ namespace NaughtyAttributes.Editor
 				_foldouts[group.Key].Value = EditorGUILayout.Foldout(_foldouts[group.Key].Value, group.Key, true);
 				if (_foldouts[group.Key].Value)
 				{
+					EditorGUI.indentLevel++;
 					foreach (var property in visibleProperties)
 					{
 						NaughtyEditorGUI.PropertyField_Layout(property, true);
 					}
+					EditorGUI.indentLevel--;
 				}
 			}
 
@@ -190,30 +189,23 @@ namespace NaughtyAttributes.Editor
 			}
 		}
 
-		private static IEnumerable<SerializedProperty> GetNonGroupedProperties(IEnumerable<SerializedProperty> properties)
-		{
-			return properties.Where(p => PropertyUtility.GetAttribute<IGroupAttribute>(p) == null);
-		}
+		private static IEnumerable<SerializedProperty> GetNonGroupedProperties(IEnumerable<SerializedProperty> properties) => properties.Where(p => PropertyUtility.GetAttribute<IGroupAttribute>(p) == null);
 
-		private static IEnumerable<IGrouping<string, SerializedProperty>> GetGroupedProperties(IEnumerable<SerializedProperty> properties)
-		{
-			return properties
+		private static IEnumerable<IGrouping<string, SerializedProperty>> GetGroupedProperties(IEnumerable<SerializedProperty> properties) => properties
 				.Where(p => PropertyUtility.GetAttribute<BoxGroupAttribute>(p) != null)
 				.GroupBy(p => PropertyUtility.GetAttribute<BoxGroupAttribute>(p).Name);
-		}
 
-		private static IEnumerable<IGrouping<string, SerializedProperty>> GetFoldoutProperties(IEnumerable<SerializedProperty> properties)
-		{
-			return properties
+		private static IEnumerable<IGrouping<string, SerializedProperty>> GetFoldoutProperties(IEnumerable<SerializedProperty> properties) => properties
 				.Where(p => PropertyUtility.GetAttribute<FoldoutAttribute>(p) != null)
 				.GroupBy(p => PropertyUtility.GetAttribute<FoldoutAttribute>(p).Name);
-		}
 
 		private static GUIStyle GetHeaderGUIStyle()
 		{
-			GUIStyle style = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
-			style.fontStyle = FontStyle.Bold;
-			style.alignment = TextAnchor.UpperCenter;
+			GUIStyle style = new GUIStyle(EditorStyles.centeredGreyMiniLabel)
+			{
+				fontStyle = FontStyle.Bold,
+				alignment = TextAnchor.UpperCenter
+			};
 
 			return style;
 		}

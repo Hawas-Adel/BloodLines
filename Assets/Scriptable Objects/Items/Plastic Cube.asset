@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5df1a251d5e3e4eae1771f7047441f, type: 3}
   m_Name: Plastic Cube
   m_EditorClassIdentifier: 
+  Layer: 0
+  Tag: Untagged
+  GizmosColor: {r: 1, g: 1, b: 1, a: 0.1}
   WorldModel: {fileID: 1571791560966325495, guid: 6c61cc2562408d843a99b9de869ff4a0, type: 3}
+  Plugins: []
   Weight: 0.5
   Value: 1
+  Description: 
+  OnAddedOrRemovedFromInventory:
+    _PersistentCalls: []

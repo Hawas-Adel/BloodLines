@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5df1a251d5e3e4eae1771f7047441f, type: 3}
   m_Name: Metal Sphere
   m_EditorClassIdentifier: 
+  Layer: 0
+  Tag: Untagged
+  GizmosColor: {r: 1, g: 1, b: 1, a: 0.1}
   WorldModel: {fileID: 5832953101923768914, guid: 14f8ae786224c534dac1e52edc9c58e1, type: 3}
+  Plugins: []
   Weight: 1
   Value: 1
+  Description: 
+  OnAddedOrRemovedFromInventory:
+    _PersistentCalls: []

@@ -1,28 +1,26 @@
 using NaughtyAttributes;
+using UltEvents;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Item", order = 0)]
-public class Item : ScriptableObject
+public class Item : VirtualGO
 {
 	public const int _TextureSize = 512;
 
-	[Required] [ShowAssetPreview] public GameObject WorldModel = default;
+	[OneLine.Separator("Item Properties")]
 	[Min(0)] public float Weight = 0;
 	[Min(0)] public int Value = 0;
 	[ResizableTextArea] public string Description = "";
 
-	public GameObject SpawnInScene(Vector3 Position, Quaternion Rotation)
+	public UltEvent<Inventory, int> OnAddedOrRemovedFromInventory;
+
+	public override void OnInstanceAwake(VirtualGOInstance instance)
 	{
-		var GO = new GameObject($"WI ~ {name}");
-		GO.AddComponent<WorldItem>().Item = this;
-		GO.transform.position = Position;
-		GO.transform.rotation = Rotation;
-		return GO;
+		if (!instance.GetComponent<WorldItem>())
+		{
+			instance.gameObject.AddComponent<WorldItem>();
+		}
 	}
-#if UNITY_EDITOR
-	[Button]
-	protected void SpawnInScene() => SpawnInScene(UnityEditor.SceneView.lastActiveSceneView.pivot, UnityEditor.SceneView.lastActiveSceneView.rotation);
-#endif
 
 	public virtual void HandleDescriptionUI(ItemDescriptionUI UI)
 	{

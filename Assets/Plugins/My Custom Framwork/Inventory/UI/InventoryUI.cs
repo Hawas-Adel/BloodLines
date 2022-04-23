@@ -1,21 +1,55 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InventoryUI : MonoBehaviour
 {
-	[SerializeField] private ItemUI ItemUIPrefap = default;
+	private Inventory TargetInventory;
 
-	private void OnEnable()
+	public void OpenUIForPlayer() => OpenUIForInventory(PlayerREF.Current.GetComponentInChildren<Inventory>());
+	public void OpenUIForInventory(Inventory Inv)
 	{
-		Inventory PlayerInv = Player.Current.GetComponentInChildren<Inventory>();
-		var Items = PlayerInv.GetContent();
-		foreach (var item in Items)
-			Instantiate(ItemUIPrefap, ItemUIPrefap.transform.parent).SetUIForItem(item.Key, PlayerInv);
+		TargetInventory = Inv;
+		RegesterEventsListners();
+		RebuildItemsUI();
 	}
 
-	private void OnDisable()
+	private void OnDisable() => UnRegesterEventsListners();
+
+	private void RegesterEventsListners()
 	{
-		var instances = ItemUIPrefap.transform.parent.GetComponentsInChildren<ItemUI>(true);
-		for (int i = 1 ; i < instances.Length ; i++)
-			Destroy(instances[i].gameObject);
+		if (TargetInventory)
+		{
+			TargetInventory.OnInventoryChanged += OnTargetInventoryChanged;
+			TargetInventory.GetComponent<Equipment>().OnEquipmentChanged += OnTargetEquipmentChanged;
+		}
+	}
+	private void UnRegesterEventsListners()
+	{
+		if (TargetInventory)
+		{
+			TargetInventory.OnInventoryChanged -= OnTargetInventoryChanged;
+			TargetInventory.GetComponent<Equipment>().OnEquipmentChanged += OnTargetEquipmentChanged;
+		}
+	}
+
+	private void OnTargetInventoryChanged(Item I = default, int C = default) => RebuildItemsUI();
+	private void OnTargetEquipmentChanged(EquipableItem EQ = default) => RebuildItemsUI();
+
+	private void RebuildItemsUI()
+	{
+		Equipment EQ = TargetInventory.GetComponent<Equipment>();
+		var PlayerInvContent = TargetInventory.GetContent();
+		for (int i = 0 ; i < PlayerInvContent.Count() ; i++)
+		{
+			ItemUI Inst = transform.childCount > i ? transform.GetChild(i).GetComponent<ItemUI>() : Instantiate(transform.GetChild(0).GetComponent<ItemUI>(), transform.parent);
+			Inst.gameObject.SetActive(true);
+			Inst.SetUIForItem(PlayerInvContent.ElementAt(i).Key, TargetInventory, EQ);
+		}
+		for (int i = PlayerInvContent.Count() ; i < transform.childCount ; i++)
+		{
+			transform.GetChild(i).gameObject.SetActive(false);
+		}
 	}
 }

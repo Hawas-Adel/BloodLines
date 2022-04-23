@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5df1a251d5e3e4eae1771f7047441f, type: 3}
   m_Name: Metal Cube
   m_EditorClassIdentifier: 
+  Layer: 0
+  Tag: Untagged
+  GizmosColor: {r: 1, g: 1, b: 1, a: 0.30588236}
   WorldModel: {fileID: 5832953101923768914, guid: 6201df7dea97a1542baccef6743714ae, type: 3}
+  Plugins: []
   Weight: 1
   Value: 1
   Description: 
+  OnAddedOrRemovedFromInventory:
+    _PersistentCalls: []

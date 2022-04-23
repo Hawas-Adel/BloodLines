@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using UltEvents;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,23 +14,26 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	[SerializeField] private TextMeshProUGUI ItemName = default;
 	[SerializeField] private TextMeshProUGUI ItemCount = default;
 	[SerializeField] private ItemDescriptionUI ItemDescriptionUI = default;
+	[SerializeField] private GameObject EquippedMarker = default;
+
+	[SerializeField] private List<Behaviour> OnHoverListners = default;
 
 	public Item Item { get; private set; }
-	public Inventory SRC { get; private set; }
+	public Inventory Inventory { get; private set; }
 
-	public void OnPointerEnter(PointerEventData eventData) => ItemDescriptionUI.SetUIForItem(this);
-	public void OnPointerExit(PointerEventData eventData) => ItemDescriptionUI.SetUIForItem(null);
-	private void OnDisable() => ItemDescriptionUI.SetUIForItem(null);
+	public void OnPointerEnter(PointerEventData eventData) => OnHoverListners.ForEach(M => M.enabled = true);
+	public void OnPointerExit(PointerEventData eventData) => OnHoverListners.ForEach(M => M.enabled = false);
 
-	public void SetUIForItem(Item item, Inventory _SRC)
+	public void SetUIForItem(Item item, Inventory Inv, Equipment EQ)
 	{
-		Item = item;
-		SRC = _SRC;
-
-		var count = SRC.HasItem(item);
-		gameObject.SetActive(item && count > 0);
+		int count = 0;
+		if (item && Inv)
+			count = Inv.HasItem(item);
+		gameObject.SetActive(count > 0);
 		if (gameObject.activeSelf)
 		{
+			Item = item;
+			Inventory = Inv;
 			if (ItemImage)
 			{
 				ItemImage.sprite = Sprite.Create(RuntimePreviewGenerator.GenerateModelPreview(item.WorldModel.transform, _TextureSize, _TextureSize),
@@ -44,6 +50,8 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 				if (ItemCount.gameObject.activeSelf)
 					ItemCount.text = $"({count})";
 			}
+
+			EquippedMarker.SetActive(EquippedMarker && EQ && item is EquipableItem e && EQ.IsEquipped(e));
 		}
 	}
 
@@ -51,12 +59,15 @@ public class ItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		if (Item is UsableItem usableItem)
 		{
-			usableItem.UseItem(Player.Current.gameObject);
-			SetUIForItem(Item, SRC);
+			usableItem.UseItem(PlayerREF.Current.gameObject);
 		}
 		else
 		{
 			Debug.Log("Item Not Usable");
 		}
 	}
+
+	public void DropItem() => Inventory.DropItem(Item);
+
+	private void OnEnable() => OnHoverListners.ForEach(M => M.enabled = false);
 }
